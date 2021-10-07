@@ -20,6 +20,8 @@ class ProductStoreRepository {
         query.setParameter("idStore",id)
         return query.resultList as List<Product>
     }
+
+
     fun findByStoreAndByCategory(id:Long,idCategory:Long):List<Product>{
         val query= em.createQuery("SELECT ProSto.product FROM ProductStore ProSto WHERE ProSto.store.id =:idStore and ProSto.product.category.id =:idCategory")
         query.setParameter("idStore",id)
