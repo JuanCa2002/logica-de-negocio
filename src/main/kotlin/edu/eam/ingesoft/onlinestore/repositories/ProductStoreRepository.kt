@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.Product
-import edu.eam.ingesoft.onlinestore.model.ProductStore
+import edu.eam.ingesoft.onlinestore.model.entities.Product
+import edu.eam.ingesoft.onlinestore.model.entities.ProductStore
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +15,7 @@ class ProductStoreRepository {
     @Autowired
     lateinit var em: EntityManager
 
-    fun findByStore(id:Long):List<Product>{
+    fun findByStore(id:Long?):List<Product>{
         val query= em.createQuery("SELECT ProSto.product FROM ProductStore ProSto WHERE ProSto.store.id =:idStore")
         query.setParameter("idStore",id)
         return query.resultList as List<Product>

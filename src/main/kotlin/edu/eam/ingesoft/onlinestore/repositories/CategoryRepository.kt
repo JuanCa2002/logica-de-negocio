@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
 
-import edu.eam.ingesoft.onlinestore.model.Category
+import edu.eam.ingesoft.onlinestore.model.entities.Category
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

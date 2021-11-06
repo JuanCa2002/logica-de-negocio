@@ -1,9 +1,8 @@
 package edu.eam.ingesoft.onlinestore.services
 
 import edu.eam.ingesoft.onlinestore.exceptions.BusinessException
-import edu.eam.ingesoft.onlinestore.model.City
-import edu.eam.ingesoft.onlinestore.model.Store
-import edu.eam.ingesoft.onlinestore.model.User
+import edu.eam.ingesoft.onlinestore.model.entities.City
+import edu.eam.ingesoft.onlinestore.model.entities.Store
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,10 +27,10 @@ class StoreServiceTest {
         entityManager.persist(city)
         entityManager.persist(Store(16L,"Cra 15","Tienda mascotas",city))
 
-        val newStore= Store(16L,"Cra 15","Tienda mascotas",city)
+        val newStore= Store(16L,"Cra 15","Tienda mascotas",null)
 
         try {
-            storeService.createStore(newStore)
+            storeService.createStore(newStore,15L)
             Assertions.fail()
 
         }catch (e: BusinessException) {
@@ -58,10 +57,10 @@ class StoreServiceTest {
     fun editStoreNotExistTest(){
         val city= City(15L,"Armenia")
         entityManager.persist(city)
-        val store=Store(16L,"Cra 15","Tienda mascotas",city)
+        val store= Store(16L,"Cra 15","Tienda mascotas",city)
 
         try {
-            storeService.editStore(store)
+            storeService.editStore(store,16L)
             Assertions.fail()
 
         }catch (e: BusinessException) {
@@ -77,7 +76,7 @@ class StoreServiceTest {
         entityManager.persist(Store(16L,"Cra 15","Tienda mascotas",city))
 
         val storeUpdate= (Store(16L,"Cra 17","Tienda videojuegos",city))
-        storeService.editStore(storeUpdate)
+        storeService.editStore(storeUpdate,16L)
 
         val storeUpdateAssert= entityManager.find(Store::class.java,16L)
         Assertions.assertEquals("Cra 17",storeUpdateAssert.address)

@@ -1,5 +1,6 @@
-package edu.eam.ingesoft.onlinestore.model
+package edu.eam.ingesoft.onlinestore.model.entities
 
+import edu.eam.ingesoft.onlinestore.model.entities.City
 import java.io.Serializable
 import javax.persistence.*
 
@@ -8,7 +9,7 @@ import javax.persistence.*
 data class User(
     @Id
     @Column(name="id_usuario")
-    val id: String,
+    var id: String?,
 
     @Column(name="direccion")
     var address:String,
@@ -21,6 +22,6 @@ data class User(
 
     @ManyToOne
     @JoinColumn(name= "id_ciudad")
-    val city: City,
+    var city: City?,
 
-):Serializable
+    ):Serializable

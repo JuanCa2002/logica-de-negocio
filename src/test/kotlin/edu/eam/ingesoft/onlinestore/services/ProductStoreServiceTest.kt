@@ -1,8 +1,8 @@
 package edu.eam.ingesoft.onlinestore.services
 
 import edu.eam.ingesoft.onlinestore.exceptions.BusinessException
-import edu.eam.ingesoft.onlinestore.model.*
-import edu.eam.ingesoft.onlinestore.repositories.ProductStoreRepository
+import edu.eam.ingesoft.onlinestore.model.entities.*
+import edu.eam.ingesoft.onlinestore.model.request.ProductRequest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +39,7 @@ class ProductStoreServiceTest {
         entityManager.persist(city)
         entityManager.persist(storeOne)
         entityManager.persist(ProductStore(4L,50000.0,15.0,productOne,storeOne))
-        val newProduct= ProductStore(5L,50000.0,15.0,productOne,storeOne)
+        val newProduct= ProductRequest(5L,50000.0,15.0,productOne.id,storeOne.id)
 
         try{
             productStoreService.createProductInStore(newProduct)
@@ -67,7 +67,7 @@ class ProductStoreServiceTest {
         entityManager.persist(city)
         entityManager.persist(storeOne)
         entityManager.persist(ProductStore(4L,50000.0,15.0,productOne,storeOne))
-        val newProduct= ProductStore(5L,50000.0,15.0,productTwo,storeOne)
+        val newProduct= ProductRequest(5L,50000.0,15.0,productTwo.id,storeOne.id)
         productStoreService.createProductInStore(newProduct)
 
         val productStore= entityManager.find(ProductStore::class.java,5L)

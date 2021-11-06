@@ -1,5 +1,6 @@
-package edu.eam.ingesoft.onlinestore.model
+package edu.eam.ingesoft.onlinestore.model.entities
 
+import edu.eam.ingesoft.onlinestore.model.entities.Category
 import java.io.Serializable
 import javax.persistence.*
 
@@ -8,7 +9,7 @@ import javax.persistence.*
 data class Product(
     @Id
     @Column(name="id_producto")
-    val id:String,
+    var id:String?,
 
     @Column(name="nombre")
     var name:String,
@@ -18,5 +19,5 @@ data class Product(
 
     @ManyToOne
     @JoinColumn(name="id_categoria")
-    val category:Category
+    var category: Category?
 ):Serializable

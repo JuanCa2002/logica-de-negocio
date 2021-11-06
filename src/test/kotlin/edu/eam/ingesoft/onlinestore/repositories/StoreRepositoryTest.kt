@@ -1,8 +1,8 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
 
-import edu.eam.ingesoft.onlinestore.model.City
-import edu.eam.ingesoft.onlinestore.model.Store
+import edu.eam.ingesoft.onlinestore.model.entities.City
+import edu.eam.ingesoft.onlinestore.model.entities.Store
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,8 +29,8 @@ class StoreRepositoryTest {
         Assertions.assertNotNull(store)
         Assertions.assertEquals("Cra 15",store.address)
         Assertions.assertEquals("Tienda mascotas",store.name)
-        Assertions.assertEquals(15L,store.city.id)
-        Assertions.assertEquals("Armenia",store.city.name)
+        Assertions.assertEquals(15L,store.city?.id)
+        Assertions.assertEquals("Armenia",store.city?.name)
 
     }
     @Test
@@ -86,8 +86,8 @@ class StoreRepositoryTest {
     fun listStoreTest(){
         val city= City(15L,"Armenia")
         entityManager.persist(city)
-        val storeOne=Store(16L,"Cra 15","Tienda mascotas",city)
-        val storeTwo=Store(17L,"Cra 16","Tienda helados",city)
+        val storeOne= Store(16L,"Cra 15","Tienda mascotas",city)
+        val storeTwo= Store(17L,"Cra 16","Tienda helados",city)
         val storeThree= Store(18L,"Cra 18","Tienda videojuegos",city)
         entityManager.persist(storeOne)
         entityManager.persist(storeTwo)

@@ -1,6 +1,6 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.City
+import edu.eam.ingesoft.onlinestore.model.entities.City
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

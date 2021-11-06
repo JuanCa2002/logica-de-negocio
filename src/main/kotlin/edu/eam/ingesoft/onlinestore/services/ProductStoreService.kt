@@ -1,12 +1,14 @@
 package edu.eam.ingesoft.onlinestore.services
 
 import edu.eam.ingesoft.onlinestore.exceptions.BusinessException
-import edu.eam.ingesoft.onlinestore.model.Product
-import edu.eam.ingesoft.onlinestore.model.ProductStore
+import edu.eam.ingesoft.onlinestore.model.entities.ProductStore
+import edu.eam.ingesoft.onlinestore.model.request.ProductRequest
 import edu.eam.ingesoft.onlinestore.repositories.ProductRepository
 import edu.eam.ingesoft.onlinestore.repositories.ProductStoreRepository
+import edu.eam.ingesoft.onlinestore.repositories.StoreRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import kotlin.reflect.jvm.internal.impl.load.java.BuiltinMethodsWithSpecialGenericSignature
 
 @Service
 class ProductStoreService {
@@ -14,12 +16,31 @@ class ProductStoreService {
     @Autowired
     lateinit var productStoreRepository: ProductStoreRepository
 
-    fun createProductInStore(productStore: ProductStore){
-        val list= productStoreRepository.findByStore(productStore.store.id)
+    @Autowired
+    lateinit var storeRepository: StoreRepository
 
-        list.forEach { if(it.id==productStore.product.id){throw BusinessException("This product already exists in this store")
+    @Autowired
+    lateinit var productRepository: ProductRepository
+
+    fun createProductInStore(productRequest: ProductRequest) {
+        val product= productRepository.find(productRequest.idProduct)
+
+        if (product== null){
+            throw BusinessException("This product does not exits")
+        }
+
+        val store= storeRepository.find(productRequest.idStore)
+
+        if(store== null){
+            throw BusinessException("This store does not exist")
+        }
+
+        val list = productStoreRepository.findByStore(productRequest.idStore)
+
+        list.forEach { if(it.id==productRequest.idProduct){throw BusinessException("This product already exists in this store")
         } }
-
+        val productStore= ProductStore(productRequest.id,productRequest.price,productRequest.stock,
+        product,store)
         productStoreRepository.create(productStore)
     }
 

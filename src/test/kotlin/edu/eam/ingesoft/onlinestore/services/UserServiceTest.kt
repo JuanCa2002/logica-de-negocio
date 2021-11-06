@@ -1,9 +1,8 @@
 package edu.eam.ingesoft.onlinestore.services
 
 import edu.eam.ingesoft.onlinestore.exceptions.BusinessException
-import edu.eam.ingesoft.onlinestore.model.City
-import edu.eam.ingesoft.onlinestore.model.Store
-import edu.eam.ingesoft.onlinestore.model.User
+import edu.eam.ingesoft.onlinestore.model.entities.City
+import edu.eam.ingesoft.onlinestore.model.entities.User
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,7 +30,7 @@ class UserServiceTest {
         val newUser= User("1","Cra 22","Juan","Torres",city)
 
         try {
-            userService.createUser(newUser)
+            userService.createUser(newUser,15L)
             Assertions.fail()
 
         }catch (e: BusinessException) {
@@ -43,7 +42,9 @@ class UserServiceTest {
     fun createUserHappyPathTest(){
         val city= City(15L,"Armenia")
         entityManager.persist(city)
-        userService.createUser(User("1","Cra 22","Juan","Torres",city))
+        val user= User("1","Cra 22","Juan","Torres",city)
+
+        userService.createUser(user,15L)
 
         val userAssert=entityManager.find(User::class.java,"1")
         Assertions.assertNotNull(userAssert)
@@ -57,10 +58,10 @@ class UserServiceTest {
     fun editUserNotExistTest(){
         val city= City(15L,"Armenia")
         entityManager.persist(city)
-        val user=User("1","Cra 22","Juan","Torres",city)
+        val user= User("1","Cra 22","Juan","Torres",city)
 
         try {
-            userService.editStore(user)
+            userService.editUser(user,"1")
             Assertions.fail()
 
         }catch (e: BusinessException) {
@@ -76,7 +77,7 @@ class UserServiceTest {
         entityManager.persist(User("1","Cra 22","Juan","Torres",city))
 
         val userUpdate= User("1","Cra 22","Julian","Beltran",city)
-        userService.editStore(userUpdate)
+        userService.editUser(userUpdate,"1")
 
         val userUpdateAssert= entityManager.find(User::class.java,"1")
         Assertions.assertEquals("Julian",userUpdateAssert.name)

@@ -1,7 +1,6 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.Product
-import edu.eam.ingesoft.onlinestore.model.Store
+import edu.eam.ingesoft.onlinestore.model.entities.Store
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -26,7 +25,7 @@ class StoreRepository {
         em.persist(store)
     }
 
-    fun find(id:Long): Store?{
+    fun find(id:Long?): Store?{
         return em.find(Store::class.java,id)
     }
 

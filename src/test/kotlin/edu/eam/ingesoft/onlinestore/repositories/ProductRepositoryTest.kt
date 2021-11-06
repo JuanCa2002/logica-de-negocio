@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.Product
-import edu.eam.ingesoft.onlinestore.model.Category
+import edu.eam.ingesoft.onlinestore.model.entities.Product
+import edu.eam.ingesoft.onlinestore.model.entities.Category
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,8 +27,8 @@ class ProductRepositoryTest {
         Assertions.assertNotNull(product)
         Assertions.assertEquals("Detergente",product.name)
         Assertions.assertEquals("Ariel",product.branch)
-        Assertions.assertEquals(15L,product.category.id)
-        Assertions.assertEquals("alimento",product.category.name)
+        Assertions.assertEquals(15L,product.category?.id)
+        Assertions.assertEquals("alimento",product.category?.name)
 
     }
     @Test

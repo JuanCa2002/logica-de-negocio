@@ -1,9 +1,8 @@
 package edu.eam.ingesoft.onlinestore.services
 
 import edu.eam.ingesoft.onlinestore.exceptions.BusinessException
-import edu.eam.ingesoft.onlinestore.model.Category
-import edu.eam.ingesoft.onlinestore.model.Product
-import edu.eam.ingesoft.onlinestore.services.ProductService
+import edu.eam.ingesoft.onlinestore.model.entities.Category
+import edu.eam.ingesoft.onlinestore.model.entities.Product
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,7 +29,7 @@ class ProductServiceTest {
         entityManager.persist(Product("1","Detergente","Ariel",category))
 
         try {
-            productService.createProduct(Product("1", "papitas", "Margarita", category))
+            productService.createProduct(Product("1", "papitas", "Margarita", null),15L)
             Assertions.fail()
         } catch (e: BusinessException) {
             Assertions.assertEquals("This product already exists", e.message)
@@ -46,7 +45,7 @@ class ProductServiceTest {
 
         val exception = Assertions.assertThrows(
             BusinessException::class.java,
-            { productService.createProduct(Product("2", "Detergente", "Ariel", category)) }
+            { productService.createProduct(Product("2", "Detergente", "Ariel", null),15L) }
         )
 
         Assertions.assertEquals("This product with this name already exists", exception.message)
@@ -57,7 +56,7 @@ class ProductServiceTest {
     fun createProductHappyPathTest() {
         val category = Category(15L,"alimento")
         entityManager.persist(category)
-        productService.createProduct(Product("1","Detergente","Ariel",category))
+        productService.createProduct(Product("1","Detergente","Ariel",null),15L)
 
         //verificaciones..
         val productToAssert = entityManager.find(Product::class.java, "1")
@@ -73,7 +72,7 @@ class ProductServiceTest {
         val productUpdate= Product("1","Detergente","Ariel",category)
 
         try{
-            productService.editProduct(productUpdate)
+            productService.editProduct(productUpdate,"1")
             Assertions.fail()
         } catch (e:BusinessException){
             Assertions.assertEquals("This product does not exist", e.message)
@@ -85,9 +84,9 @@ class ProductServiceTest {
         val category = Category(15L,"alimento")
         entityManager.persist(category)
         entityManager.persist(Product("1","Detergente","Ariel",category))
-        val productUpdate=Product("1","Detergente","Ariel",category)
+        val productUpdate= Product("1","Detergente","Ariel",category)
         try{
-            productService.editProduct(productUpdate)
+            productService.editProduct(productUpdate,"1")
             Assertions.fail()
         } catch (e:BusinessException){
             Assertions.assertEquals("This product with this name already exists", e.message)
@@ -100,7 +99,7 @@ class ProductServiceTest {
         entityManager.persist(category)
         entityManager.persist(Product("1","Detergente","Ariel",category))
         val productUpdate= Product("1","Papitas","Ariel",category)
-        productService.editProduct(productUpdate)
+        productService.editProduct(productUpdate,"1")
 
         //verificaciones..
         val productToAssert = entityManager.find(Product::class.java, "1")

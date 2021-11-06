@@ -1,6 +1,6 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.User
+import edu.eam.ingesoft.onlinestore.model.entities.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -17,7 +17,7 @@ class UserRepository {
         em.persist(user)
     }
 
-    fun find(id:String): User?{
+    fun find(id:String?): User?{
         return em.find(User::class.java,id)
     }
 

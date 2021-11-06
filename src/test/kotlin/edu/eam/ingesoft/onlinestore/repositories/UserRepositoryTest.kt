@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.onlinestore.repositories
 
-import edu.eam.ingesoft.onlinestore.model.City
-import edu.eam.ingesoft.onlinestore.model.User
+import edu.eam.ingesoft.onlinestore.model.entities.City
+import edu.eam.ingesoft.onlinestore.model.entities.User
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,8 +30,8 @@ class UserRepositoryTest {
         Assertions.assertEquals("Cra 22",user.address)
         Assertions.assertEquals("Juan",user.name)
         Assertions.assertEquals("Torres",user.lastName)
-        Assertions.assertEquals(15L,user.city.id)
-        Assertions.assertEquals("Armenia",user.city.name)
+        Assertions.assertEquals(15L,user.city?.id)
+        Assertions.assertEquals("Armenia",user.city?.name)
 
     }
     @Test
