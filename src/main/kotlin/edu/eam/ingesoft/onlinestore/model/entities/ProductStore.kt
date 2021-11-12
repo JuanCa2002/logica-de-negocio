@@ -1,4 +1,4 @@
-package edu.eam.ingesoft.onlinestore.model
+package edu.eam.ingesoft.onlinestore.model.entities
 
 import java.io.Serializable
 import javax.persistence.*
@@ -18,9 +18,9 @@ data class ProductStore(
 
     @ManyToOne
     @JoinColumn(name="id_producto")
-    val product:Product,
+    val product: Product,
 
     @ManyToOne
     @JoinColumn(name="id_tienda")
-    val store:Store,
+    val store: Store,
 ):Serializable
